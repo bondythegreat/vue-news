@@ -126,6 +126,11 @@ const news = {
     getDetail(state) {
       return (idx) => state.newsList[idx];
     },
+    getHistoryDesc(state) {
+      // clone and reverse
+      const reversedList = [...state.history].reverse();
+      return reversedList;
+    },
   },
 };
 export default news;

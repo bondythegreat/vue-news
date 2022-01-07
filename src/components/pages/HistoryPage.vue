@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'HistoryPage',
   computed: {
-    ...mapState({
-      history: (state) => state.news.history.reverse(),
+    ...mapGetters({
+      history: 'news/getHistoryDesc',
     }),
   },
   filters: {
