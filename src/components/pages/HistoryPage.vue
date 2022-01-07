@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="mb-5">History</h1>
+        <h1 class="text-h2 mb-5">History</h1>
 
         <v-list two-line>
           <div :key="item.date" v-for="item in history">

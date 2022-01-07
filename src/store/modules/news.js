@@ -81,8 +81,8 @@ const news = {
         });
     },
 
-    setNewsTitle({ commit }, { newsItem, newTitle }) {
-      commit('CHANGE_NEWS_TITLE', { newsItem, newTitle });
+    setNewsTitle({ commit }, payload) {
+      commit('CHANGE_NEWS_TITLE', payload);
     },
     getWrongEndpoint({ commit, dispatch }) {
       const url = 'https://newsapi.org/v2/sources?apiKey';
