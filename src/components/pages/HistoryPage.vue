@@ -2,27 +2,42 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1>History</h1>
-        <ul>
-          <li>History 1</li>
-          <li>History 2</li>
-          <li>History 3</li>
-          <li>History 4</li>
-          <li>History 5</li>
-        </ul>
+        <h1 class="mb-5">History</h1>
+
+        <v-list two-line>
+          <div :key="item.date" v-for="item in history">
+            <v-divider />
+            <v-list-item>
+              <v-list-item-avatar tile>
+                <img :src="item.news.urlToImage" />
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-subtitle>{{ item.date | renderDate }}</v-list-item-subtitle>
+                <v-list-item-title>{{ item.news.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
+          <v-divider />
+        </v-list>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
+import { mapState } from 'vuex';
 
-  data: () => ({}),
-  mounted() {
-    // eslint-disable-next-line no-console
-    console.log(process.env.VUE_APP_NEWS_API_KEY);
+export default {
+  name: 'HistoryPage',
+  computed: {
+    ...mapState({
+      history: (state) => state.news.history.reverse(),
+    }),
+  },
+  filters: {
+    renderDate(newsDate) {
+      return new Date(newsDate);
+    },
   },
 };
 </script>

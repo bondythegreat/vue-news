@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import DefaultLayout from '../components/layouts/DefaultLayout.vue';
 import Home from '../components/pages/TheHomepage.vue';
+import Detail from '../components/pages/DetailPage.vue';
 import History from '../components/pages/HistoryPage.vue';
 
 Vue.use(VueRouter);
@@ -16,6 +17,11 @@ const routes = [
         path: '/',
         name: 'homepage',
         component: Home,
+      },
+      {
+        path: '/detail/:idx',
+        name: 'detailPage',
+        component: Detail,
       },
       {
         path: '/history',
