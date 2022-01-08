@@ -9,9 +9,8 @@ const general = {
       commit('SET_LOADING', payload);
     },
     setError({ commit }, payload) {
-      console.log('error', payload);
       commit('SET_ERROR', payload);
-      setTimeout(() => commit('SET_ERROR', ''), 2000);
+      setTimeout(() => commit('SET_ERROR', ''), 5000);
     },
     dismissError({ commit }) {
       commit('SET_ERROR', '');

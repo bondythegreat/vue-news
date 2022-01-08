@@ -20,8 +20,9 @@ const news = {
           commit('SET_NEWS_LIST', res.data);
         })
         .catch((err) => {
-          console.log('ERROR', err);
-          dispatch('general/setError', 'ERROR WHEN CALL ENDPOINT', { root: true });
+          dispatch('general/setError', `ERROR WHEN CALL ENDPOINT. MESSAGE: ${err.message}`, {
+            root: true,
+          });
         })
         .finally(() => {
           dispatch('general/setLoading', false, { root: true });
@@ -38,8 +39,9 @@ const news = {
           commit('SET_NEWS_LIST', res.data);
         })
         .catch((err) => {
-          console.log('ERROR', err);
-          dispatch('general/setError', 'ERROR WHEN CALL ENDPOINT', { root: true });
+          dispatch('general/setError', `ERROR WHEN CALL ENDPOINT. MESSAGE: ${err.message}`, {
+            root: true,
+          });
         })
         .finally(() => {
           dispatch('general/setLoading', false, { root: true });
@@ -62,8 +64,9 @@ const news = {
           commit('SET_SOURCES_LIST', res.data);
         })
         .catch((err) => {
-          console.log('ERROR', err);
-          dispatch('general/setError', 'ERROR WHEN CALL ENDPOINT', { root: true });
+          dispatch('general/setError', `ERROR WHEN CALL ENDPOINT. MESSAGE: ${err.message}`, {
+            root: true,
+          });
         })
         .finally(() => {
           dispatch('general/setLoading', false, { root: true });
@@ -81,8 +84,9 @@ const news = {
           commit('SET_SOURCES_LIST', res.data);
         })
         .catch((err) => {
-          console.log('ERROR', err);
-          dispatch('general/setError', 'ERROR WHEN CALL ENDPOINT', { root: true });
+          dispatch('general/setError', `ERROR WHEN CALL ENDPOINT. MESSAGE: ${err.message}`, {
+            root: true,
+          });
         })
         .finally(() => {
           dispatch('general/setLoading', false, { root: true });

@@ -16,6 +16,24 @@
     </v-row>
 
     <v-row>
+      <v-col cols="12" md="8" lg="6">
+        <v-layout wrap>
+          <v-text-field
+            clearable
+            label="Search"
+            class="mr-2"
+            v-model="keyword"
+            @input="doSearch"
+            @click:clear="clearSearch"
+            v-if="showSearchField"
+          ></v-text-field>
+          <v-btn color="blue" class="mt-2 mb-4" fab dark small top @click="toggleSearch">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+        </v-layout>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="12">
         <v-flex class="text-center" v-if="isLoading">
           <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
@@ -59,6 +77,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { debounce } from 'lodash';
 import NewsActions from '../NewsActions.vue';
 import SourcelistMenu from '../SourcelistMenu.vue';
 
@@ -69,7 +88,12 @@ export default {
     return {
       pageTitle: 'Top Headlines',
       renderedList: [],
+      showSearchField: false,
+      keyword: '',
     };
+  },
+  created() {
+    this.doSearch = debounce(this.doSearch, 500);
   },
   mounted() {
     this.getSourcesList();
@@ -87,6 +111,7 @@ export default {
       getTopHeadlines: 'news/getTopHeadlines',
       getSourcesList: 'news/getSourcesList',
       getHeadlinesBySource: 'news/getHeadlinesBySource',
+      getTopHeadlinesByKeyword: 'news/getTopHeadlinesByKeyword',
       resetFilteredList: 'news/resetFilteredList',
       getWrongEndpoint: 'news/getWrongEndpoint',
     }),
@@ -97,6 +122,19 @@ export default {
     resetFilter() {
       this.pageTitle = 'Top Headlines';
       this.resetFilteredList();
+    },
+    toggleSearch() {
+      this.showSearchField = !this.showSearchField;
+    },
+    doSearch() {
+      const keywordLength = this.keyword ? this.keyword.length : 0;
+      if (keywordLength > 3) {
+        this.getTopHeadlinesByKeyword(this.keyword);
+      }
+    },
+    clearSearch() {
+      this.keyword = '';
+      this.getTopHeadlines();
     },
   },
 };
