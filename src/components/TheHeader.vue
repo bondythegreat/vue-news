@@ -1,17 +1,19 @@
 <template>
   <div>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="News App"
-          class="shrink mr-2"
-          contain
-          :src="require('@/assets/news-logo.png')"
-          transition="scale-transition"
-          width="60"
-        />
-        NEWS APP
-      </div>
+      <router-link to="/" class="logo">
+        <div class="d-flex align-center">
+          <v-img
+            alt="News App"
+            class="shrink mr-2"
+            contain
+            :src="require('@/assets/news-logo.png')"
+            transition="scale-transition"
+            width="60"
+          />
+          NEWS APP
+        </div>
+      </router-link>
 
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="drawer = !drawer">
@@ -76,5 +78,9 @@ export default {
   font-size: 16px;
   text-decoration: none;
   padding: 10px 0;
+}
+.logo * {
+  color: white;
+  text-decoration: none;
 }
 </style>
