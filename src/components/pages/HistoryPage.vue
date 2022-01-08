@@ -5,7 +5,7 @@
         <h1 class="text-h2 mb-5">History</h1>
 
         <v-list two-line>
-          <div :key="item.date" v-for="item in history">
+          <div :key="idx" v-for="(item, idx) in history">
             <v-divider />
             <v-list-item>
               <v-list-item-avatar tile>

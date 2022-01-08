@@ -3,6 +3,7 @@ import axios from 'axios';
 const news = {
   namespaced: true,
   state: {
+    masterList: [],
     newsList: [],
     totalResults: null,
     sourcesList: [],
@@ -28,7 +29,7 @@ const news = {
     },
 
     getTopHeadlinesByKeyword({ commit, dispatch }, keyword) {
-      const url = `https://newsapi.org/v2/top-headlines?country=us&q=${keyword}apiKey=${process.env.VUE_APP_NEWS_API_KEY}`;
+      const url = `https://newsapi.org/v2/top-headlines?q=${keyword}&apiKey=${process.env.VUE_APP_NEWS_API_KEY}`;
 
       dispatch('general/setLoading', true, { root: true });
       axios
@@ -45,24 +46,12 @@ const news = {
         });
     },
 
-    getHeadlinesBySource({ commit, dispatch }, sourceId) {
-      const url = `https://newsapi.org/v2/top-headlines?country=us&sources=${sourceId}apiKey=${process.env.VUE_APP_NEWS_API_KEY}`;
-
-      dispatch('general/setLoading', true, { root: true });
-      axios
-        .get(url)
-        .then((res) => {
-          commit('SET_NEWS_LIST', res.data);
-        })
-        .catch((err) => {
-          console.log('ERROR', err);
-          dispatch('general/setError', 'ERROR WHEN CALL ENDPOINT', { root: true });
-        })
-        .finally(() => {
-          dispatch('general/setLoading', false, { root: true });
-        });
+    getHeadlinesBySource({ commit }, sourceId) {
+      commit('SET_FILTERED_LIST', sourceId);
     },
-
+    resetFilteredList({ commit }) {
+      commit('RESET_FILTERED_LIST');
+    },
     getSourcesList({ commit, dispatch }) {
       const url = `https://newsapi.org/v2/sources?apiKey=${process.env.VUE_APP_NEWS_API_KEY}`;
 
@@ -70,7 +59,7 @@ const news = {
       axios
         .get(url)
         .then((res) => {
-          commit('SET_SOURCES_LIST', res);
+          commit('SET_SOURCES_LIST', res.data);
         })
         .catch((err) => {
           console.log('ERROR', err);
@@ -89,7 +78,7 @@ const news = {
       axios
         .get(url)
         .then((res) => {
-          commit('SET_SOURCES_LIST', res);
+          commit('SET_SOURCES_LIST', res.data);
         })
         .catch((err) => {
           console.log('ERROR', err);
@@ -105,11 +94,19 @@ const news = {
   },
   mutations: {
     SET_NEWS_LIST(state, { articles, totalResults }) {
+      state.masterList = articles;
       state.newsList = articles;
       state.totalResults = totalResults;
     },
-    SET_SOURCES_LIST(state, payload) {
-      state.sourcesList = payload;
+    SET_FILTERED_LIST(state, sourceId) {
+      const filteredList = state.masterList.filter((item) => item.source.id === sourceId);
+      state.newsList = filteredList;
+    },
+    RESET_FILTERED_LIST(state) {
+      state.newsList = state.masterList;
+    },
+    SET_SOURCES_LIST(state, { sources }) {
+      state.sourcesList = sources;
     },
     CHANGE_NEWS_TITLE(state, { newsItem, newTitle }) {
       state.newsList.find((item) => item.title === newsItem.title).title = newTitle;
